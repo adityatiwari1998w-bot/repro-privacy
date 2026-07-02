@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Repro — Privacy Policy</title>
+<style>
+  body { max-width: 760px; margin: 0 auto; padding: 40px 22px 80px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    color: #1c1c28; line-height: 1.6; font-size: 16px; }
+  h1 { font-size: 26px; margin: 0 0 4px; }
+  .sub { color: #6b7280; margin: 0 0 28px; }
+  h2 { font-size: 18px; margin: 30px 0 8px; }
+  code { background: #f3f4f8; padding: 1px 5px; border-radius: 4px; font-size: 14px; }
+  ul { padding-left: 20px; }
+  a { color: #4f46e5; }
+  .note { background: #f5f6fa; border: 1px solid #e7e8ee; border-radius: 10px; padding: 14px 16px; }
+</style>
+</head>
+<body>
+  <h1>Repro — Privacy Policy</h1>
+  <p class="sub">Last updated: July 2, 2026</p>
+
+  <p>Repro is a browser extension that records a web page you choose — screen video, console
+  logs, network requests, user actions, and storage — into a single capture that you can replay
+  to reproduce and debug frontend issues. This policy explains what data Repro handles and how.</p>
+
+  <div class="note"><strong>In short:</strong> Repro is local-first. Everything it captures stays
+  on your own computer unless you explicitly turn on Google Drive upload, in which case captures
+  go only to your own Google Drive. Repro has no servers, shows no ads, and includes no analytics
+  or third-party tracking.</div>
+
+  <h2>What Repro captures</h2>
+  <p>Repro only captures data while you actively start a recording on a tab you have chosen. During
+  a recording it may record:</p>
+  <ul>
+    <li><strong>Website content</strong> — screen video of the tab, page text and images, the page's
+    HTML/CSS, and the bodies and headers of network requests made by the page.</li>
+    <li><strong>User activity</strong> — clicks, keystrokes, scrolling, navigation, and network activity
+    that occur on the page during the recording.</li>
+    <li><strong>Page environment</strong> — the recorded page's URL and title, browser user-agent,
+    language, timezone, viewport, and storage values (localStorage, sessionStorage, cookies, IndexedDB)
+    for the recorded page.</li>
+  </ul>
+  <p>Repro does not track your browsing history, and it does not run or collect anything on pages
+  where you have not started a recording.</p>
+
+  <h2>How your data is stored and used</h2>
+  <ul>
+    <li>Captures and settings are stored <strong>locally on your device</strong> (in the browser's
+    IndexedDB and local storage) and, when you save or export, in your <code>Downloads/Repro</code>
+    folder or a folder you choose.</li>
+    <li>Data is used only to display, replay, and export your own captures — the extension's single
+    purpose. It is never used for advertising, profiling, creditworthiness, or lending.</li>
+    <li>Repro does not sell or transfer your data to third parties.</li>
+  </ul>
+
+  <h2>Optional Google Drive upload</h2>
+  <p>Google Drive upload is <strong>off by default</strong>. If you enable it and sign in, Repro uses
+  Google OAuth solely to upload your finished capture to <strong>your own Google Drive</strong> and to
+  create a shareable link that you control. Repro requests only the <code>drive.file</code> scope, which
+  limits access to files the app creates. Repro does not read your other Drive files and does not send
+  your data anywhere else. Data handled through Google Drive is subject to
+  <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google's Privacy Policy</a>.</p>
+
+  <h2>Sensitive content in recordings</h2>
+  <p>Because Repro records whatever is on the page you choose, a recording could incidentally contain
+  sensitive information (for example, personal details, tokens, or payment fields shown on that page).
+  Repro does not seek out or extract such data, but you control what you record and where you share it.
+  Please review captures before sharing them.</p>
+
+  <h2>Your control and data deletion</h2>
+  <ul>
+    <li>You can delete any capture from the Captures library at any time, which removes its data from
+    local storage.</li>
+    <li>Removing the extension deletes its locally stored data. Files you exported to disk, and anything
+    you uploaded to your own Google Drive, remain until you delete them yourself.</li>
+  </ul>
+
+  <h2>Permissions</h2>
+  <p>Repro requests only the permissions needed for the above: recording the active tab
+  (<code>tabCapture</code>, <code>activeTab</code>, <code>offscreen</code>), running its capture scripts
+  on pages you record (<code>scripting</code>, <code>tabs</code>, host access), saving files
+  (<code>downloads</code>, <code>storage</code>, <code>unlimitedStorage</code>), and optional Drive
+  sign-in (<code>identity</code>). Repro does not execute remote code; all code ships in the extension.</p>
+
+  <h2>Changes</h2>
+  <p>If this policy changes, the "Last updated" date above will be revised.</p>
+
+  <h2>Contact</h2>
+  <p>Questions about this policy: <a href="mailto:aditya.tiwari1998.s@gmail.com">aditya.tiwari1998.s@gmail.com</a></p>
+</body>
+</html>
