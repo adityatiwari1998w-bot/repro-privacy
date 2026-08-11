@@ -11,15 +11,19 @@
   h1 { font-size: 26px; margin: 0 0 4px; }
   .sub { color: #6b7280; margin: 0 0 28px; }
   h2 { font-size: 18px; margin: 30px 0 8px; }
+  h3 { font-size: 15px; margin: 20px 0 6px; }
   code { background: #f3f4f8; padding: 1px 5px; border-radius: 4px; font-size: 14px; }
   ul { padding-left: 20px; }
   a { color: #4f46e5; }
   .note { background: #f5f6fa; border: 1px solid #e7e8ee; border-radius: 10px; padding: 14px 16px; }
+  table { border-collapse: collapse; width: 100%; margin: 10px 0 4px; font-size: 15px; }
+  th, td { border: 1px solid #e7e8ee; padding: 8px 10px; text-align: left; vertical-align: top; }
+  th { background: #f5f6fa; font-weight: 600; }
 </style>
 </head>
 <body>
   <h1>Repro — Privacy Policy</h1>
-  <p class="sub">Last updated: July 2, 2026</p>
+  <p class="sub">Last updated: August 11, 2026</p>
 
   <p>Repro is a browser extension that records a web page you choose — screen video, console
   logs, network requests, user actions, and storage — into a single capture that you can replay
@@ -27,12 +31,14 @@
 
   <div class="note"><strong>In short:</strong> Repro is local-first. Everything it captures stays
   on your own computer unless you explicitly turn on Google Drive upload, in which case captures
-  go only to your own Google Drive. Repro has no servers, shows no ads, and includes no analytics
-  or third-party tracking.</div>
+  go only to your own Google Drive. Repro shows no ads, uses no third-party tracking or advertising
+  SDKs, and never sends recorded content anywhere. The only data that can leave your device
+  automatically is an <strong>optional, off-by-default</strong> anonymous count of which features
+  you use — described in full below.</div>
 
   <h2>What Repro captures</h2>
-  <p>Repro only captures data while you actively start a recording on a tab you have chosen. During
-  a recording it may record:</p>
+  <p>Repro only captures data while you actively start a recording or take a screenshot on a tab you
+  have chosen. During a recording it may record:</p>
   <ul>
     <li><strong>Website content</strong> — screen video of the tab, page text and images, the page's
     HTML/CSS, and the bodies and headers of network requests made by the page.</li>
@@ -41,9 +47,12 @@
     <li><strong>Page environment</strong> — the recorded page's URL and title, browser user-agent,
     language, timezone, viewport, and storage values (localStorage, sessionStorage, cookies, IndexedDB)
     for the recorded page.</li>
+    <li><strong>Microphone audio</strong> — only if you explicitly enable narration and grant Chrome's
+    microphone permission. Audio is mixed into the recording on your device and is never streamed
+    anywhere.</li>
   </ul>
-  <p>Repro does not track your browsing history, and it does not run or collect anything on pages
-  where you have not started a recording.</p>
+  <p>All of this stays on your device. Repro does not track your browsing history, and it does not
+  run or collect anything on pages where you have not started a recording or capture.</p>
 
   <h2>How your data is stored and used</h2>
   <ul>
@@ -55,6 +64,70 @@
     <li>Repro does not sell or transfer your data to third parties.</li>
   </ul>
 
+  <h2>What leaves your device</h2>
+  <p>Only three things can ever leave your device, and you control all three:</p>
+  <table>
+    <tr><th>What</th><th>When</th><th>Where it goes</th></tr>
+    <tr>
+      <td>A capture (video, logs, network, screenshots)</td>
+      <td>Only when <em>you</em> choose to export, download, or upload it</td>
+      <td>Your own disk, or your own Google Drive if you enable it</td>
+    </tr>
+    <tr>
+      <td>Anonymous feature-usage events</td>
+      <td>Only if you turn on usage analytics (off by default)</td>
+      <td>A Cloudflare Worker operated by Repro's developer</td>
+    </tr>
+    <tr>
+      <td>Google sign-in</td>
+      <td>Only if you enable Google Drive upload and sign in</td>
+      <td>Google, under Google's own privacy policy</td>
+    </tr>
+  </table>
+
+  <h2>Optional usage analytics</h2>
+  <p>Usage analytics is <strong>off by default</strong>. It is only active if you turn it on — either
+  on Repro's welcome screen or in Settings — and you can turn it off again at any time in Settings,
+  which stops all sending immediately.</p>
+
+  <h3>What is sent</h3>
+  <p>When enabled, Repro sends a small JSON message each time you use a tracked feature. The message
+  contains only:</p>
+  <ul>
+    <li><strong>An event name</strong> from a fixed list, for example <code>recording_started</code>,
+    <code>screenshot_taken</code>, <code>gif_exported</code>, or <code>capture_deleted</code>.</li>
+    <li><strong>An anonymous ID</strong> — a random identifier generated on your device the first time
+    analytics runs. It is not derived from your account, email, hardware, or IP address, and it is not
+    linked to any identity. It exists only so repeated events can be counted as one user rather than
+    many.</li>
+    <li><strong>The extension version</strong> and a <strong>timestamp</strong>.</li>
+    <li><strong>A build flag</strong> indicating whether the extension was installed from the Chrome Web
+    Store or loaded unpacked, so developer testing can be excluded from the totals.</li>
+    <li><strong>A few non-identifying feature flags</strong> — for example whether console capture was
+    switched on or off, or a coarse recording-length bucket such as "30–60s". These values are
+    stripped to simple on/off, numeric, or short alphanumeric values before storage.</li>
+  </ul>
+
+  <h3>What is never sent</h3>
+  <p>Analytics never includes anything from a capture. Specifically, Repro does <strong>not</strong>
+  send page content, HTML/CSS, screenshots, video, audio, console logs, network requests or headers,
+  storage values, page URLs or titles, your browsing history, your name, your email address, or any
+  other personal identifier.</p>
+
+  <h3>Where it goes and how long it is kept</h3>
+  <p>Events are sent to a Cloudflare Worker operated by Repro's developer at
+  <code>repro-analytics.aditya-tiwari1998-apps.workers.dev</code> and stored in a Cloudflare D1
+  database. There is no Google Analytics, no advertising SDK, and no third-party analytics provider
+  involved. Cloudflare acts only as the hosting provider and processes the request under
+  <a href="https://www.cloudflare.com/privacypolicy/" target="_blank" rel="noopener">Cloudflare's privacy policy</a>.
+  IP addresses are not recorded in the analytics database. Stored events are automatically deleted
+  after 180 days.</p>
+
+  <h3>Your control</h3>
+  <p>Turn analytics off in Settings to stop all sending. Because the anonymous ID is stored only on
+  your device, removing the extension or clearing its data permanently disconnects you from any past
+  events, which remain only as anonymous aggregate counts until they are deleted on the schedule above.</p>
+
   <h2>Optional Google Drive upload</h2>
   <p>Google Drive upload is <strong>off by default</strong>. If you enable it and sign in, Repro uses
   Google OAuth solely to upload your finished capture to <strong>your own Google Drive</strong> and to
@@ -65,27 +138,37 @@
 
   <h2>Sensitive content in recordings</h2>
   <p>Because Repro records whatever is on the page you choose, a recording could incidentally contain
-  sensitive information (for example, personal details, tokens, or payment fields shown on that page).
-  Repro does not seek out or extract such data, but you control what you record and where you share it.
-  Please review captures before sharing them.</p>
+  sensitive information (for example, personal details, authentication tokens, cookies, or payment
+  fields shown on or sent by that page). Repro does not seek out or extract such data, it stays on your
+  device, and Repro offers redaction and blur tools for screenshots and exports. You control what you
+  record and where you share it — please review captures before sharing them.</p>
 
   <h2>Your control and data deletion</h2>
   <ul>
     <li>You can delete any capture from the Captures library at any time, which removes its data from
     local storage.</li>
-    <li>Removing the extension deletes its locally stored data. Files you exported to disk, and anything
-    you uploaded to your own Google Drive, remain until you delete them yourself.</li>
+    <li>You can turn usage analytics off at any time in Settings.</li>
+    <li>Removing the extension deletes its locally stored data, including the anonymous analytics ID.
+    Files you exported to disk, and anything you uploaded to your own Google Drive, remain until you
+    delete them yourself.</li>
   </ul>
+
+  <h2>Children</h2>
+  <p>Repro is a developer tool and is not directed to children under 13, and Repro does not knowingly
+  collect personal information from them.</p>
 
   <h2>Permissions</h2>
   <p>Repro requests only the permissions needed for the above: recording the active tab
   (<code>tabCapture</code>, <code>activeTab</code>, <code>offscreen</code>), running its capture scripts
-  on pages you record (<code>scripting</code>, <code>tabs</code>, host access), saving files
-  (<code>downloads</code>, <code>storage</code>, <code>unlimitedStorage</code>), and optional Drive
-  sign-in (<code>identity</code>). Repro does not execute remote code; all code ships in the extension.</p>
+  on the pages you record (<code>tabs</code> and host access), saving files (<code>downloads</code>,
+  <code>storage</code>, <code>unlimitedStorage</code>), and optional Drive sign-in
+  (<code>identity</code>). Microphone access is requested separately by Chrome and only when you enable
+  narration. Repro does not execute remote code; all code ships inside the extension.</p>
 
   <h2>Changes</h2>
-  <p>If this policy changes, the "Last updated" date above will be revised.</p>
+  <p>If this policy changes, the "Last updated" date above will be revised. Material changes to what
+  leaves your device will not be applied retroactively — analytics, in particular, will always require
+  a fresh opt-in.</p>
 
   <h2>Contact</h2>
   <p>Questions about this policy: <a href="mailto:aditya.tiwari1998.s@gmail.com">aditya.tiwari1998.s@gmail.com</a></p>
